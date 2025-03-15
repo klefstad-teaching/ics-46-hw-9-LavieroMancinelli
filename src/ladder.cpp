@@ -26,7 +26,7 @@ void print_word_ladder(const vector<string>& ladder) {
 
 // distance used is <= 1
 bool edit_distance_within(const std::string& str1, const std::string& str2, int d) {
-    queue<vector<int>> queue;
+    /*queue<vector<int>> queue;
     int m = str1.length(), n = str2.length();
     queue.push({m,n,0});
 
@@ -47,6 +47,23 @@ bool edit_distance_within(const std::string& str1, const std::string& str2, int 
     }
 
     return false;
+    */
+    // adapted from geeksforfeeks
+    int m = str1.length(), n = str2.length();
+    // [0][0] is empty string
+    vector<vector<int>> distance(m+1, vector<int>(n+1)); // distance from m to n up to this char
+    
+    for (int i = 0; i <= m; ++i) distance[i][0] = i; // distance from empty to this char
+    for (int i = 0; i <= n; ++i) distance[0][i] = i;
+
+    for (int i = 1; i <= m; ++i) {
+        for (int j = 1; j <= n; ++j) {
+            if (str1[i-1] == str2[j-1]) distance[i][j] = distance[i-1][j-1];
+            else distance[i][j] = 1 + min(distance[i-1][j], min(distance[i-1][j-1], distance[i][j-1]));
+        }
+    }
+
+    return distance[m][n] <= d;
 }
 
 vector<string> generate_word_ladder(const string& begin_word, const string& end_word, const set<string>& word_list) {
