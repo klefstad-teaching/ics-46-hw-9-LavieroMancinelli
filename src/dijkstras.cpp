@@ -41,10 +41,12 @@ vector<int> extract_shortest_path(const vector<int>& distances, const vector<int
         path.push_back(cur);
         cur = previous[cur];
     }
-    vector<int> reversed;
-    for (auto it = path.rbegin(); it != path.rend(); ++it)
-        reversed.push_back(*it);
-    return reversed;
+    //vector<int> reversed;
+    //for (auto it = path.rbegin(); it != path.rend(); ++it)
+    //    reversed.push_back(*it);
+    //return reversed;
+    reverse(path.begin(), path.end());
+    return path;
 }
 
 void print_path(const vector<int>& v, int total) {
