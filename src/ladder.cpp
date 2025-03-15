@@ -40,9 +40,9 @@ bool edit_distance_within(const std::string& str1, const std::string& str2, int 
         if (str1[i-1] == str2[j-1])     // chars match, no distance added
             queue.push({i-1, j-1, w});
         else {
-            queue.push({i, j-1, w+1});      // insert 
-            queue.push({i-1, j, w+1});      // remove
-            queue.push({i-1, j-1, w+1});    // susbtitute
+            if (w + 1 <= d) queue.push({i, j-1, w+1});      // insert 
+            if (w + 1 <= d) queue.push({i-1, j, w+1});      // remove
+            if (w + 1 <= d) queue.push({i-1, j-1, w+1});    // susbtitute
         }
     }
 
